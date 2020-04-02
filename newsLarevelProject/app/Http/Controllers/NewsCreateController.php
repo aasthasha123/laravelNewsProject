@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\News;
 use App\Category;
@@ -55,20 +54,6 @@ class NewsCreateController extends Controller
         $news->body = $request->body;
         $catId = $request->category;
         $news->category  = Category::find($request->category)->title;   
-           
-        // if($request->hasFile('image')){
-        //     $image = $request->file('image');
-        //     $filename = time().'.'.$image->getClientOriginalExtension();
-        //     $location = public_path('image/'.$filename);
-        //     Image::make($image)->resize(800,400)->save($location);
-        //     $news->image = $filename;
-
-
-        // }
-
-
-
-
         $news->save();
         return redirect()->route('admin');
 

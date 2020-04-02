@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\News;
+use App\Category;
 class NewsController extends Controller
 {
     /**
@@ -14,77 +14,34 @@ class NewsController extends Controller
     public function index()
     {
         $news = News::all();
-        $max_body = News::find(1);
-        $secondary = News::find(2);
-        $third = News::find(3);
-        return view('news.index',compact('news','max_body','secondary','third'));
+        $slider_record = News::take(3)->get();
+        $main_news = News::take(3)->get();
+        $secondary = News::take(2)->get();
+        $category = Category::all();
+        return view('news.index',compact('news','slider_record','main_news','secondary','category'));
 
     }
-
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function entertainment()
-    {
-
-        $news = News::where('category','=','Entertainment')->get();
-        return view('news.entertainment',compact('news'));
-
-
-    }
-
-
+    
 
        /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function sports()
+    public function categoryNews( $category_name )
     {
+        $category = Category::all();
+        $news = News::where('category','=',$category_name)->get();
 
-        $news = News::where('category','=','Sports')->get();
-        return view('news.sports',compact('news'));
+        return view('news.category',compact('news','category','category_name'));
 
 
     }
 
 
-
-       /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function world()
-    {
-
-        $news = News::where('category','=','World')->get();
-        return view('news.world',compact('news'));
-
-
-    }
-
-
-
-       /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function india()
-    {
-
-        $news = News::where('category','=','India')->get();
-        return view('news.india',compact('news'));
-
-
-    }
 
     
+
 
 
     /**
@@ -117,8 +74,9 @@ class NewsController extends Controller
      */
     public function show($id)
     {
+        $category = Category::all();
         $news = News::find($id);
-        return view('news.single',compact('news'));
+        return view('news.single',compact('news','category'));
         
 
     }
