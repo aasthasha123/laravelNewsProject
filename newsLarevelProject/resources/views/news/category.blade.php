@@ -22,6 +22,8 @@
         <li><a href="{{ route('news.categoryNews',$value->title) }}"> {{ $value->title }} </a></li>
 
         @endforeach
+        
+<li><a href="{{route('admin') }}">Admin Panel</a></li>
 
       </ul>
     </div>
